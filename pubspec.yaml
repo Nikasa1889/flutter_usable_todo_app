@@ -1,0 +1,36 @@
+name: usabletodoapp
+description: A usable todo app with reusable components
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^0.4.4+3
+  firebase_auth: ^0.16.0
+  firebase_database: ^3.1.5
+  cupertino_icons: ^0.1.3
+  provider: ^4.0.5+1
+  flushbar: ^1.10.2
+  form_field_validator: ^1.0.0
+  firebase_performance: ^0.3.1+8
+
+dev_dependencies:
+  flutter_launcher_icons: ^0.7.5
+  flutter_test:
+    sdk: flutter
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/todo_app_icon_300dpi.png"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
