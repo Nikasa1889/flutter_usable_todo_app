@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 class ConfigService {
@@ -19,7 +18,7 @@ class ConfigService {
   // Factory method for ConfigurationService.
   // Make sure _remoteConfig is fresh.
   static Future<ConfigService> create(
-      FirebaseUser user, Future<RemoteConfig> futureRemoteConfig) async {
+      Future<RemoteConfig> futureRemoteConfig) async {
     RemoteConfig remoteConfig = await futureRemoteConfig;
     await remoteConfig.setDefaults(_defaultConfiguration);
     await remoteConfig.fetch(expiration: _config_expiration);
@@ -29,7 +28,7 @@ class ConfigService {
 
   // Factory method for ConfigurationService in dev mode.
   static Future<ConfigService> createDev(
-      FirebaseUser user, Future<RemoteConfig> futureRemoteConfig) async {
+      Future<RemoteConfig> futureRemoteConfig) async {
     RemoteConfig remoteConfig = await futureRemoteConfig;
     remoteConfig.setConfigSettings(RemoteConfigSettings(debugMode: true));
     await remoteConfig.setDefaults(_defaultConfiguration);

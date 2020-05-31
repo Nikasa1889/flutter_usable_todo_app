@@ -29,7 +29,7 @@ class RootPage extends StatelessWidget {
               futureTodoListService: TodoListService.create(
                 user.uid,
                 FirebaseDatabase.instance,
-                ConfigService.create(user, RemoteConfig.instance),
+                ConfigService.create(RemoteConfig.instance),
               ),
             );
           }
