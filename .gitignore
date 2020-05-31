@@ -46,3 +46,7 @@ app.*.map.json
 
 # Firebase service connection.
 google-services.json
+
+# Keystore for publishing app.
+/android/key.properties
+/android/app/key.jks

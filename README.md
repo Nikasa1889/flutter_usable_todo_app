@@ -14,10 +14,9 @@ proof of concepts for their building blocks.
 - [x] Auto-sync data service with Firebase Realtime Database.
 - [x] Notification center with Flushbar.
 - [x] ConfigService with Firebase Remote Config.
-- [x] Separate service creat
 - [x] Reorderable and Dismissable TodoList.
 - [ ] Unit-tests and Integration-tests.
-- [ ] Release the app on Google Play.
+- [x] Release the app on Google Play.
 
 ## Getting Started
 Because the app uses Firebase exclusively for backend services, you need to configure the app to

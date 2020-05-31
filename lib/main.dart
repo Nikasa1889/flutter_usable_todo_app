@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Music Interval Trainer',
+        title: 'UsableTodos',
         theme: lightTheme,
         home: RootPage(),
       ),
