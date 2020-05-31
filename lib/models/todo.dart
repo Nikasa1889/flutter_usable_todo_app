@@ -1,20 +1,17 @@
-import 'package:firebase_database/firebase_database.dart';
-
 class Todo {
+  // Unique key for each Todo. The key is generated automatically by Firebase.
   String key;
+  // The subject and also the only content of the Todo.
   String subject;
+  // Indicates if the Todo is marked as completed.
   bool completed;
+  // The userId that this Todo belongs to.
   String userId;
+  // The priority used to implicitly order todos in the todo list.
+  // Smaller means higher priority.
   int priority;
 
   Todo(this.subject, this.userId, this.completed, this.priority);
-
-  Todo.fromSnapshot(DataSnapshot snapshot)
-      : key = snapshot.key,
-        userId = snapshot.value["userId"],
-        subject = snapshot.value["subject"],
-        completed = snapshot.value["completed"],
-        priority = snapshot.value["priority"];
 
   Todo.fromMap(String key, Map values)
       : key = key,

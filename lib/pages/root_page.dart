@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:usabletodoapp/pages/login_signup_page.dart';
 import 'package:usabletodoapp/services/authentication_service.dart';
+import 'package:usabletodoapp/services/config_service.dart';
 import 'package:usabletodoapp/services/todo_list_service.dart';
 
 import 'home_page.dart';
@@ -23,7 +26,11 @@ class RootPage extends StatelessWidget {
           } else {
             return HomePage(
               user: user,
-              futureTodoListService: TodoListService.create(user),
+              futureTodoListService: TodoListService.create(
+                user,
+                FirebaseDatabase.instance,
+                ConfigService.create(user, RemoteConfig.instance),
+              ),
             );
           }
         }

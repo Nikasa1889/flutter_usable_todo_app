@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:usabletodoapp/pages/root_page.dart';
@@ -14,7 +15,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AuthService())],
+      providers: [
+        ChangeNotifierProvider<AuthService>(
+          create: (_) => AuthService(FirebaseAuth.instance),
+        ),
+      ],
       child: MaterialApp(
         title: 'Music Interval Trainer',
         theme: lightTheme,

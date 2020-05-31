@@ -5,16 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import "package:firebase_database/firebase_database.dart";
 import 'package:flutter/material.dart';
 import 'package:usabletodoapp/models/todo.dart';
-
-// TODO: refactor to configuration service.
-String getTodoTableOfUser(FirebaseUser user) {
-  return "users/${user.uid}/todos/";
-}
-
-const int MAX_TODOs = 15;
+import 'package:usabletodoapp/services/config_service.dart';
 
 class TodoListService with ChangeNotifier {
-  final FirebaseDatabase _db = FirebaseDatabase.instance;
+  ConfigService _config;
+  FirebaseDatabase _db;
   DatabaseReference _todoRootRef;
 
   // This todoList is kept in sync with server-side at all time.
@@ -22,21 +17,26 @@ class TodoListService with ChangeNotifier {
 
   StreamSubscription<Event> todoListSubscription;
 
-  TodoListService._(FirebaseUser user) {
+  TodoListService._(
+      FirebaseUser user, FirebaseDatabase database, ConfigService config) {
+    _config = config;
+    _db = database;
     _db.setPersistenceEnabled(true);
     _todoRootRef = _db
         .reference()
-        .child(getTodoTableOfUser(user))
+        .child(config.getUserTodoListURI(user.uid))
         // .orderByPriority() (or related methods) does not work for now due to
         // https://github.com/FirebaseExtended/flutterfire/issues/753
         .reference();
     _todoRootRef.keepSynced(true);
     todoListSubscription = _todoRootRef.onValue.listen(_onTodoListChanged);
   }
-  // Factory method that return Future<TodoListService> that make sure todoList
-  // is refreshed when the future is done.
-  static Future<TodoListService> create(FirebaseUser user) async {
-    var todoListService = TodoListService._(user);
+
+  // Factory method for TodoListService.
+  // Guarantees that _todoList is synced when the returned future is done.
+  static Future<TodoListService> create(FirebaseUser user,
+      FirebaseDatabase database, Future<ConfigService> config) async {
+    var todoListService = TodoListService._(user, database, await config);
     await todoListService._refreshTodoList();
     return todoListService;
   }
@@ -87,8 +87,9 @@ class TodoListService with ChangeNotifier {
 
   // Todo's key is ignored and set automatically by the service.
   Future<void> createTodo(Todo todo) async {
-    if (todoList.length >= MAX_TODOs) {
-      return Future.error("Sorry, you can't have more than $MAX_TODOs todo, "
+    if (todoList.length >= _config.getMaxTodos()) {
+      return Future.error(
+          "Sorry, you can't have more than ${_config.getMaxTodos()} todo, "
           "please clear some first so you won't be overwhelmed!");
     }
     try {

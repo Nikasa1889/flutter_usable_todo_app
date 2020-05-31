@@ -9,12 +9,15 @@ proof of concepts for their building blocks.
 - [x] Customizable [Material Components](https://flutter.dev/docs/development/ui/widgets/material) with ThemeData.
 - [x] Login Page.
 - [x] Input Validators
+- [x] All data models' fields and config keys must have expressive comment.
 - [x] Authentication with Firebase Auth.
 - [x] Auto-sync data service with Firebase Realtime Database.
 - [x] Notification center with Flushbar.
-- [ ] Injectable Configuration with Firebase Remote Config.
+- [x] ConfigService with Firebase Remote Config.
+- [x] Separate service creat
 - [x] Reorderable and Dismissable TodoList.
 - [ ] Unit-tests and Integration-tests.
+- [ ] Release the app on Google Play.
 
 ## Getting Started
 Because the app uses Firebase exclusively for backend services, you need to configure the app to

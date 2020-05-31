@@ -4,7 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class AuthService with ChangeNotifier {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuth _firebaseAuth;
+
+  AuthService(this._firebaseAuth);
 
   Future<FirebaseUser> signIn(String email, String password) async {
     String errorMessage;
