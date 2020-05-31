@@ -11,6 +11,8 @@ String getTodoTableOfUser(FirebaseUser user) {
   return "users/${user.uid}/todos/";
 }
 
+const int MAX_TODOs = 20;
+
 class TodoListService with ChangeNotifier {
   final FirebaseDatabase _db = FirebaseDatabase.instance;
   DatabaseReference _todoRootRef;
@@ -79,16 +81,20 @@ class TodoListService with ChangeNotifier {
     try {
       await _todoRootRef.child(todoKey).remove();
     } catch (e) {
-      return Future.error("Error deleting the todo item");
+      return Future.error("Error deleting a todo item");
     }
   }
 
   // Todo's key is ignored and set automatically by the service.
   Future<void> createTodo(Todo todo) async {
+    if (todoList.length >= MAX_TODOs) {
+      return Future.error("Sorry, you can't have more than $MAX_TODOs todo, "
+          "please clear some first so you won't be overwhelmed!");
+    }
     try {
       await _todoRootRef.push().set(todo.toJson(), priority: todo.priority);
     } catch (e) {
-      return Future.error("Error while adding the todo item");
+      return Future.error("Error while adding a todo item");
     }
   }
 
@@ -98,7 +104,7 @@ class TodoListService with ChangeNotifier {
           .child(todo.key)
           .set(todo.toJson(), priority: todo.priority);
     } catch (e) {
-      return Future.error("Error while updating the todo item");
+      return Future.error("Error while updating a todo item");
     }
   }
 

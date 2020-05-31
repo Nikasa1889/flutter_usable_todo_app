@@ -24,15 +24,8 @@ class DecoratedTextFormField extends StatelessWidget {
       obscureText: this.obscureText,
       decoration: InputDecoration(
         hintText: hintText,
-        contentPadding: const EdgeInsets.only(bottom: 4.0, top: 4.0),
         filled: true,
         fillColor: Theme.of(context).selectedRowColor,
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(
-              width: 0,
-              style: BorderStyle.none,
-            )),
         prefixIcon: Icon(prefixIcon),
       ),
       validator: validator,

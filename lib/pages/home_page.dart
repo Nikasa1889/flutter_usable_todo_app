@@ -32,7 +32,11 @@ class _HomePageState extends State<HomePage> {
       var priority = todoListService.todoList.isEmpty
           ? 0
           : todoListService.todoList.last.priority + 1;
-      todoListService.createTodo(Todo("", widget.user.uid, false, priority));
+      todoListService
+          .createTodo(Todo("", widget.user.uid, false, priority))
+          .catchError((error) {
+        notifyError(context, message: error);
+      });
     }
 
     return Scaffold(

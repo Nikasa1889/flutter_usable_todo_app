@@ -14,8 +14,6 @@ class Todo {
         userId = snapshot.value["userId"],
         subject = snapshot.value["subject"],
         completed = snapshot.value["completed"],
-        // Sets default priority to a big number. This will be overrided
-        // by TodoListService to keep priorities consecutive.
         priority = snapshot.value["priority"];
 
   Todo.fromMap(String key, Map values)

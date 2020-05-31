@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:usabletodoapp/components/todo_list_tile.dart';
 import 'package:usabletodoapp/models/todo.dart';
+import 'package:usabletodoapp/services/notification_service.dart';
 import 'package:usabletodoapp/services/todo_list_service.dart';
 
 class ReorderableTodoList extends StatelessWidget {
@@ -10,17 +11,23 @@ class ReorderableTodoList extends StatelessWidget {
     final todoListService = Provider.of<TodoListService>(context);
 
     void _onTodoDismissed(String todoKey) =>
-        todoListService.deleteTodo(todoKey);
+        todoListService.deleteTodo(todoKey).catchError((error) {
+          notifyError(context, message: error);
+        });
 
     void _onTodoReordered(int oldIdx, int newIdx) {
-      todoListService.reorderTodo(oldIdx, newIdx);
+      todoListService.reorderTodo(oldIdx, newIdx).catchError((error) {
+        notifyError(context, message: error);
+      });
     }
 
     void _onTodoChanged(Todo todo) {
       if (todo.subject.isEmpty) {
         todoListService.deleteTodo(todo.key);
       } else {
-        todoListService.updateTodo(todo);
+        todoListService.updateTodo(todo).catchError((error) {
+          notifyError(context, message: error);
+        });
       }
     }
 

@@ -3,10 +3,8 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:usabletodoapp/components/contained_buttons.dart';
 import 'package:usabletodoapp/components/decorated_text_form_field.dart';
-import 'package:usabletodoapp/components/form_card.dart';
-import 'package:usabletodoapp/components/outline_buttons.dart';
+import 'package:usabletodoapp/components/two_colors_button.dart';
 import 'package:usabletodoapp/services/authentication_service.dart';
 import 'package:usabletodoapp/services/notification_service.dart';
 
@@ -88,36 +86,39 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                 SizedBox(height: deviceSize.height * 0.05),
                 Form(
                   key: _formKey,
-                  child: FormCard(
-                    child: Column(
-                      children: <Widget>[
-                        _buildEmailInput(controller: emailController),
-                        SizedBox(height: 10),
-                        _buildPasswordInput(controller: passwordController),
-                        SizedBox(height: 10),
-                        if (state == LoginSignupState.SIGNING_UP)
-                          _buildPasswordConfirmInput(
-                              passwordController: passwordController),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            _buildLoginButton(
-                              onPressedWhileLoggingIn: _onLogin,
-                              onPressedWhileNotLoggingIn: () =>
-                                  _setState(LoginSignupState.LOGGING_IN),
-                              state: state,
-                            ),
-                            _buildSignupButton(
-                                onPressedWhileSigningUp: _onSignUp,
-                                onPressedWhileNotSigningUp: () =>
-                                    _setState(LoginSignupState.SIGNING_UP),
-                                state: state),
-                          ],
-                        ),
-                        _buildSigninAnnonymouslyButton(
-                            onPressed: _onLoginAnonymously),
-                      ],
+                  child: Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Column(
+                        children: <Widget>[
+                          _buildEmailInput(controller: emailController),
+                          SizedBox(height: 10),
+                          _buildPasswordInput(controller: passwordController),
+                          SizedBox(height: 10),
+                          if (state == LoginSignupState.SIGNING_UP)
+                            _buildPasswordConfirmInput(
+                                passwordController: passwordController),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              _buildLoginButton(
+                                onPressedWhileLoggingIn: _onLogin,
+                                onPressedWhileNotLoggingIn: () =>
+                                    _setState(LoginSignupState.LOGGING_IN),
+                                state: state,
+                              ),
+                              _buildSignupButton(
+                                  onPressedWhileSigningUp: _onSignUp,
+                                  onPressedWhileNotSigningUp: () =>
+                                      _setState(LoginSignupState.SIGNING_UP),
+                                  state: state),
+                            ],
+                          ),
+                          _buildSigninAnnonymouslyButton(
+                              onPressed: _onLoginAnonymously),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -130,24 +131,29 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
-  Widget _buildLogo({@required size}) => Hero(
-        tag: 'Logo',
-        child: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          radius: size / 2,
-          child: Image.asset('assets/todo_app_icon_75dpi.png'),
-        ),
-      );
+  Widget _buildLogo({@required size}) {
+    return Hero(
+      tag: 'Logo',
+      child: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        radius: size / 2,
+        child: Image.asset('assets/todo_app_icon_75dpi.png'),
+      ),
+    );
+  }
 
-  Widget _buildEmailInput({@required controller}) => DecoratedTextFormField(
-        controller: controller,
-        keyboardType: TextInputType.emailAddress,
-        hintText: 'Email',
-        prefixIcon: Icons.mail,
-        validator: EmailValidator(errorText: 'Email is invalid'),
-      );
+  Widget _buildEmailInput({@required controller}) {
+    return DecoratedTextFormField(
+      controller: controller,
+      keyboardType: TextInputType.emailAddress,
+      hintText: 'Email',
+      prefixIcon: Icons.mail,
+      validator: EmailValidator(errorText: 'Email is invalid'),
+    );
+  }
 
-  Widget _buildPasswordInput({@required controller}) => DecoratedTextFormField(
+  Widget _buildPasswordInput({@required controller}) {
+    return DecoratedTextFormField(
       controller: controller,
       obscureText: true,
       keyboardType: TextInputType.visiblePassword,
@@ -157,46 +163,49 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         RequiredValidator(errorText: 'Password is required'),
         MinLengthValidator(8,
             errorText: 'Password must be at least 8 character long'),
-      ]));
+      ]),
+    );
+  }
 
-  Widget _buildPasswordConfirmInput({@required passwordController}) =>
-      DecoratedTextFormField(
-        obscureText: true,
-        keyboardType: TextInputType.visiblePassword,
-        hintText: 'Retype password',
-        prefixIcon: Icons.lock,
-        validator: (val) =>
-            MatchValidator(errorText: 'Password does not matched')
-                .validateMatch(val, passwordController.text),
-      );
+  Widget _buildPasswordConfirmInput({@required passwordController}) {
+    return DecoratedTextFormField(
+      obscureText: true,
+      keyboardType: TextInputType.visiblePassword,
+      hintText: 'Retype password',
+      prefixIcon: Icons.lock,
+      validator: (val) => MatchValidator(errorText: 'Password does not matched')
+          .validateMatch(val, passwordController.text),
+    );
+  }
 
-  Widget _buildLoginButton(
-          {@required onPressedWhileLoggingIn,
-          @required onPressedWhileNotLoggingIn,
-          @required LoginSignupState state}) =>
-      RoundContainedButton(
-          text: 'LOGIN',
-          onPressed: state == LoginSignupState.LOGGING_IN
-              ? onPressedWhileLoggingIn
-              : onPressedWhileNotLoggingIn,
-          primary: state == LoginSignupState.LOGGING_IN);
+  Widget _buildLoginButton({@required onPressedWhileLoggingIn,
+    @required onPressedWhileNotLoggingIn,
+    @required LoginSignupState state}) {
+    return TwoColorsButton(
+        text: 'LOGIN',
+        onPressed: state == LoginSignupState.LOGGING_IN
+            ? onPressedWhileLoggingIn
+            : onPressedWhileNotLoggingIn,
+        primary: state == LoginSignupState.LOGGING_IN);
+  }
 
-  Widget _buildSignupButton(
-          {@required onPressedWhileSigningUp,
-          @required onPressedWhileNotSigningUp,
-          @required LoginSignupState state}) =>
-      RoundContainedButton(
-          text: 'SIGNUP',
-          onPressed: state == LoginSignupState.SIGNING_UP
-              ? onPressedWhileSigningUp
-              : onPressedWhileNotSigningUp,
-          primary: state == LoginSignupState.SIGNING_UP);
+  Widget _buildSignupButton({@required onPressedWhileSigningUp,
+    @required onPressedWhileNotSigningUp,
+    @required LoginSignupState state}) {
+    return TwoColorsButton(
+        text: 'SIGNUP',
+        onPressed: state == LoginSignupState.SIGNING_UP
+            ? onPressedWhileSigningUp
+            : onPressedWhileNotSigningUp,
+        primary: state == LoginSignupState.SIGNING_UP);
+  }
 
-  Widget _buildSigninAnnonymouslyButton({@required onPressed}) =>
-      RoundOutlineButton(
-        text: 'Login Annonymously',
-        onPressed: onPressed,
-      );
+  Widget _buildSigninAnnonymouslyButton({@required onPressed}) {
+    return OutlineButton(
+      child: Text('Login Annonymously'),
+      onPressed: onPressed,
+    );
+  }
 
   void _setState(LoginSignupState state) {
     setState(() {

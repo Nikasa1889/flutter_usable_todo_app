@@ -4,7 +4,7 @@ A simple flutter app with simple reusable building blocks.
 I also try to make the todo app itself as production-ready as possible, so that it works as a
 proof of concepts for their building blocks.
 
-## Component list
+## Features
 
 - [ ] Customizable [Material Components](https://flutter.dev/docs/development/ui/widgets/material) with ThemeData.
 - [x] Login Page.
