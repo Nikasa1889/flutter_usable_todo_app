@@ -190,9 +190,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         primary: state == LoginSignupState.LOGGING_IN);
   }
 
-  Widget _buildSignupButton({@required onPressedWhileSigningUp,
-    @required onPressedWhileNotSigningUp,
-    @required LoginSignupState state}) {
+  Widget _buildSignupButton(
+      {@required onPressedWhileSigningUp,
+      @required onPressedWhileNotSigningUp,
+      @required LoginSignupState state}) {
     return TwoColorsButton(
         text: 'SIGNUP',
         onPressed: state == LoginSignupState.SIGNING_UP
