@@ -6,7 +6,7 @@ proof of concepts for their building blocks.
 
 ## Features
 
-- [ ] Customizable [Material Components](https://flutter.dev/docs/development/ui/widgets/material) with ThemeData.
+- [x] Customizable [Material Components](https://flutter.dev/docs/development/ui/widgets/material) with ThemeData.
 - [x] Login Page.
 - [x] Input Validators
 - [x] Authentication with Firebase Auth.

@@ -11,7 +11,7 @@ String getTodoTableOfUser(FirebaseUser user) {
   return "users/${user.uid}/todos/";
 }
 
-const int MAX_TODOs = 20;
+const int MAX_TODOs = 15;
 
 class TodoListService with ChangeNotifier {
   final FirebaseDatabase _db = FirebaseDatabase.instance;
