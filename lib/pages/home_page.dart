@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:usabletodoapp/components/reorderable_todo_list.dart';
@@ -8,8 +7,8 @@ import 'package:usabletodoapp/services/notification_service.dart';
 import 'package:usabletodoapp/services/todo_list_service.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({@required this.user, @required this.futureTodoListService});
-  final FirebaseUser user;
+  HomePage({@required this.userId, @required this.futureTodoListService});
+  final String userId;
   final Future<TodoListService> futureTodoListService;
   @override
   _HomePageState createState() => _HomePageState();
@@ -33,7 +32,7 @@ class _HomePageState extends State<HomePage> {
           ? 0
           : todoListService.todoList.last.priority + 1;
       todoListService
-          .createTodo(Todo("", widget.user.uid, false, priority))
+          .createTodo(Todo("", widget.userId, false, priority))
           .catchError((error) {
         notifyError(context, message: error);
       });

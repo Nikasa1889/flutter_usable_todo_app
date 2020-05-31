@@ -25,9 +25,9 @@ class RootPage extends StatelessWidget {
             return LoginSignupPage(auth: auth);
           } else {
             return HomePage(
-              user: user,
+              userId: user.uid,
               futureTodoListService: TodoListService.create(
-                user,
+                user.uid,
                 FirebaseDatabase.instance,
                 ConfigService.create(user, RemoteConfig.instance),
               ),

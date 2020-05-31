@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import "package:firebase_database/firebase_database.dart";
 import 'package:flutter/material.dart';
 import 'package:usabletodoapp/models/todo.dart';
@@ -18,13 +17,13 @@ class TodoListService with ChangeNotifier {
   StreamSubscription<Event> todoListSubscription;
 
   TodoListService._(
-      FirebaseUser user, FirebaseDatabase database, ConfigService config) {
+      String userId, FirebaseDatabase database, ConfigService config) {
     _config = config;
     _db = database;
     _db.setPersistenceEnabled(true);
     _todoRootRef = _db
         .reference()
-        .child(config.getUserTodoListURI(user.uid))
+        .child(config.getUserTodoListURI(userId))
         // .orderByPriority() (or related methods) does not work for now due to
         // https://github.com/FirebaseExtended/flutterfire/issues/753
         .reference();
@@ -34,9 +33,9 @@ class TodoListService with ChangeNotifier {
 
   // Factory method for TodoListService.
   // Guarantees that _todoList is synced when the returned future is done.
-  static Future<TodoListService> create(FirebaseUser user,
+  static Future<TodoListService> create(String userId,
       FirebaseDatabase database, Future<ConfigService> config) async {
-    var todoListService = TodoListService._(user, database, await config);
+    var todoListService = TodoListService._(userId, database, await config);
     await todoListService._refreshTodoList();
     return todoListService;
   }
